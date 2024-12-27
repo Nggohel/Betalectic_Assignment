@@ -5,9 +5,17 @@ import SearchBar from "../Components/SearchBar";
 interface NpmPackage {
   name: string;
   description: string;
-  npmLink: string; // Added to display a link to the npm package
+  npmLink: string;
 }
-
+interface NpmApiResponse {
+    package: {
+      name: string;
+      description: string;
+      links: {
+        npm: string;
+      };
+    };
+  }
 interface SearchInputProps {
   onPackageSelect: (pkg: NpmPackage) => void;
 }
@@ -30,11 +38,16 @@ export default function SearchInput({ onPackageSelect }: SearchInputProps) {
         );
 
       
-        const packages = response.data.results.map((result: any) => ({
-          name: result.package.name,
-          description: result.package.description || "No description available.",
-          npmLink: result.package.links.npm,
-        }));
+        // const packages = response.data.results.map((result: any) => ({
+        //   name: result.package.name,
+        //   description: result.package.description || "No description available.",
+        //   npmLink: result.package.links.npm,
+        // }));
+        const packages = response.data.results.map((result: NpmApiResponse) => ({
+            name: result.package.name,
+            description: result.package.description || "No description available.",
+            npmLink: result.package.links.npm,
+          }));
 
         setResults(packages);
       } catch (error) {
