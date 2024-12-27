@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import SearchBar from "../Components/SearchBar"; // Import the new SearchBar component
+import SearchBar from "../Components/SearchBar"; 
 
 interface NpmPackage {
   name: string;
@@ -13,14 +13,14 @@ interface SearchInputProps {
 }
 
 export default function SearchInput({ onPackageSelect }: SearchInputProps) {
-  const [query, setQuery] = useState<string>(""); // User's search query
-  const [results, setResults] = useState<NpmPackage[]>([]); // Search results
-  const [selected, setSelected] = useState<string | null>(null); // Selected package
+  const [query, setQuery] = useState<string>("");
+  const [results, setResults] = useState<NpmPackage[]>([]);
+  const [selected, setSelected] = useState<string | null>(null); 
 
   useEffect(() => {
     const fetchResults = async () => {
       if (query.trim() === "") {
-        setResults([]); // Clear results if query is empty
+        setResults([]); 
         return;
       }
 
@@ -29,14 +29,14 @@ export default function SearchInput({ onPackageSelect }: SearchInputProps) {
           `https://api.npms.io/v2/search?q=${query}`
         );
 
-        // Map the API response to our NpmPackage structure
+      
         const packages = response.data.results.map((result: any) => ({
           name: result.package.name,
           description: result.package.description || "No description available.",
           npmLink: result.package.links.npm,
         }));
 
-        setResults(packages); // Update the results state
+        setResults(packages);
       } catch (error) {
         console.error("Error fetching NPM packages:", error);
       }
@@ -46,10 +46,10 @@ export default function SearchInput({ onPackageSelect }: SearchInputProps) {
   }, [query]);
 
   const handleSelection = (value: string) => {
-    setSelected(value); // Update the selected package
+    setSelected(value);
     const selectedPkg = results.find((pkg) => pkg.name === value);
     if (selectedPkg) {
-      onPackageSelect(selectedPkg); // Notify parent component
+      onPackageSelect(selectedPkg); 
     }
   };
 
@@ -58,7 +58,7 @@ export default function SearchInput({ onPackageSelect }: SearchInputProps) {
       <SearchBar query={query} setQuery={setQuery} />
       <ul
         className="mt-4 overflow-y-auto hide-scrollbar scroll-on-hover"
-        style={{ maxHeight: "200px" }} // Limit the height of the list
+        style={{ maxHeight: "200px" }} 
       >
         {results.map((pkg) => (
           <li key={pkg.name} className="flex items-center mb-2 p-2">

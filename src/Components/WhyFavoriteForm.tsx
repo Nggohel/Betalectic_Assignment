@@ -55,7 +55,7 @@ export default function WhyFavoriteForm({
         className="mt-2"
       />
       {error && <p className="text-red-500 mt-2">{error}</p>}
-      <Button onClick={handleSubmit} className="mt-4">
+      <Button onClick={handleSubmit} className="mt-4 bg-green-500">
         Submit
       </Button>
     </div>
