@@ -39,7 +39,7 @@ export default function WhyFavoriteForm({
 
     setReason("");
     setError(null);
-    router.push("/");
+    router.push("/favorites")
   };
 
   return (
